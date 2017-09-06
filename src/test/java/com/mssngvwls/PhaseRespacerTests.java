@@ -19,10 +19,19 @@ public class PhaseRespacerTests {
     private PhraseRespacer phraseRespacer;
 
     @Test
-    public void phrase_is_respaced() {
+    public void phrase_is_respaced_with_equal_spacings() {
         final String input = "Manchester United";
         when(randomNumberGenerator.between(1, 4)).thenReturn(1);
         final String expectedOutput = "M a n c h e s t e r U n i t e d";
+        final String actualOutput = phraseRespacer.respace(input);
+        assertThat(actualOutput).isEqualTo(expectedOutput);
+    }
+
+    @Test
+    public void phrase_is_respaced_with_different_spacings() {
+        final String input = "Manchester United";
+        when(randomNumberGenerator.between(1, 4)).thenReturn(3, 2, 4, 3, 1, 3);
+        final String expectedOutput = "Man ch este rUn i ted";
         final String actualOutput = phraseRespacer.respace(input);
         assertThat(actualOutput).isEqualTo(expectedOutput);
     }
