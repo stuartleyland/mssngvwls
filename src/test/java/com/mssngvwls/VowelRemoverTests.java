@@ -38,4 +38,12 @@ public class VowelRemoverTests {
         final String actualOutput = vowelRemover.removeVowels(input);
         assertThat(actualOutput).isEqualTo(expectedOutput);
     }
+
+    @Test
+    public void vowels_are_removed_from_multiple_words() {
+        final String input = "Manchester United";
+        final String expectedOutput = "Mnchstr ntd";
+        final String actualOutput = vowelRemover.removeVowels(input);
+        assertThat(actualOutput).isEqualTo(expectedOutput);
+    }
 }
