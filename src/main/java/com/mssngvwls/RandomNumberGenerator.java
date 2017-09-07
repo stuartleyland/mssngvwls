@@ -1,9 +1,13 @@
 package com.mssngvwls;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.springframework.stereotype.Service;
 
 @Service
-public interface RandomNumberGenerator {
+public class RandomNumberGenerator {
 
-    public int between(final int lower, final int upper);
+    public int between(final int lower, final int upper) {
+        return ThreadLocalRandom.current().nextInt(lower, upper + 1);
+    }
 }
