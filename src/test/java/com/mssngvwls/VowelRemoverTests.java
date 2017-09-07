@@ -2,18 +2,17 @@ package com.mssngvwls;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class VowelRemoverTests {
 
-    @Autowired
     private VowelRemover vowelRemover;
+
+    @Before
+    public void setup() {
+        vowelRemover = new VowelRemover();
+    }
 
     @Test
     public void lowercased_vowels_are_removed() {
