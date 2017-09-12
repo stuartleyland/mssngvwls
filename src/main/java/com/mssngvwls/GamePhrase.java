@@ -1,12 +1,14 @@
 package com.mssngvwls;
 
-public class Phrase {
+public class GamePhrase {
 
     private final String fullPhrase;
-    private final Category category;
+    private final String phraseWithoutVowels;
+    private final String category;
 
-    public Phrase(final String fullPhrase, final Category category) {
+    public GamePhrase(final String fullPhrase, final String phraseWithoutVowels, final String category) {
         this.fullPhrase = fullPhrase;
+        this.phraseWithoutVowels = phraseWithoutVowels;
         this.category = category;
     }
 
@@ -16,6 +18,7 @@ public class Phrase {
         int result = 1;
         result = (prime * result) + ((category == null) ? 0 : category.hashCode());
         result = (prime * result) + ((fullPhrase == null) ? 0 : fullPhrase.hashCode());
+        result = (prime * result) + ((phraseWithoutVowels == null) ? 0 : phraseWithoutVowels.hashCode());
         return result;
     }
 
@@ -30,7 +33,7 @@ public class Phrase {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Phrase other = (Phrase) obj;
+        final GamePhrase other = (GamePhrase) obj;
         if (category == null) {
             if (other.category != null) {
                 return false;
@@ -45,6 +48,13 @@ public class Phrase {
         } else if (!fullPhrase.equals(other.fullPhrase)) {
             return false;
         }
+        if (phraseWithoutVowels == null) {
+            if (other.phraseWithoutVowels != null) {
+                return false;
+            }
+        } else if (!phraseWithoutVowels.equals(other.phraseWithoutVowels)) {
+            return false;
+        }
         return true;
     }
 
@@ -52,7 +62,11 @@ public class Phrase {
         return fullPhrase;
     }
 
-    public Category getCategory() {
+    public String getPhraseWithoutVowels() {
+        return phraseWithoutVowels;
+    }
+
+    public String getCategory() {
         return category;
     }
 }

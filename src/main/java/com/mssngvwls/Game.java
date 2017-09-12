@@ -20,14 +20,14 @@ public class Game {
     }
 
     private void nextPhrase() {
-        final Phrase nextPhrase = gameState.getPhrases().poll();
+        final GamePhrase nextPhrase = gameState.getPhrases().poll();
 
         gameState.setCurrentPhrase(nextPhrase == null ? Optional.empty() : Optional.of(nextPhrase));
         gameState.setGameOver(nextPhrase == null);
     }
 
     public GameState guessPhrase(final String guess) {
-        final Optional<Phrase> currentPhrase = gameState.getCurrentPhrase();
+        final Optional<GamePhrase> currentPhrase = gameState.getCurrentPhrase();
         if (currentPhrase.isPresent() && guess.equalsIgnoreCase(currentPhrase.get().getFullPhrase())) {
             gameState.incrementScore();
         } else {

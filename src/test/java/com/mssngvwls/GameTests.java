@@ -16,13 +16,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class GameTests {
 
-    private static final Category FOOTBALL_TEAMS_CATEGORY = new Category("Football Teams");
+    private static final String INCORRECT_ANSWER = "incorrect answer";
+    private static final String FOOTBALL_TEAMS_CATEGORY_NAME = "Football Teams";
     private static final String FOOTBALL_TEAM_1_NAME = "Manchester United";
-    private static final Phrase FOOTBALL_TEAM_PHRASE_1 = new Phrase(FOOTBALL_TEAM_1_NAME, "Mnchstr ntd", FOOTBALL_TEAMS_CATEGORY);
+    private static final GamePhrase FOOTBALL_TEAM_PHRASE_1 = new GamePhrase(FOOTBALL_TEAM_1_NAME, "Mnchstr ntd", FOOTBALL_TEAMS_CATEGORY_NAME);
 
-    private static final Category GREETINGS_CATEGORY = new Category("Greetings");
+    private static final String GREETINGS_CATEGORY_NAME = "Greetings";
     private static final String GREETING_1 = "Yo";
-    private static final Phrase GREETINGS_PHRASE_1 = new Phrase(GREETING_1, "Y", GREETINGS_CATEGORY);
+    private static final GamePhrase GREETINGS_PHRASE_1 = new GamePhrase(GREETING_1, "Y", GREETINGS_CATEGORY_NAME);
 
     @Mock
     private PhraseSelector phraseSelector;
@@ -46,7 +47,7 @@ public class GameTests {
         final GameState gameState = game.startGame();
 
         assertThat(gameState.getCurrentCategory().isPresent()).isTrue();
-        assertThat(gameState.getCurrentCategory().get()).isEqualTo(FOOTBALL_TEAMS_CATEGORY);
+        assertThat(gameState.getCurrentCategory().get()).isEqualTo(FOOTBALL_TEAMS_CATEGORY_NAME);
     }
 
     @Test
@@ -91,7 +92,7 @@ public class GameTests {
         when(phraseSelector.generateCategories()).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         game.startGame();
 
-        final GameState gameState = game.guessPhrase("incorrect answer");
+        final GameState gameState = game.guessPhrase(INCORRECT_ANSWER);
         assertThat(gameState.getScore()).isEqualTo(-1);
     }
 
@@ -100,7 +101,7 @@ public class GameTests {
         when(phraseSelector.generateCategories()).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         game.startGame();
 
-        final GameState gameState = game.guessPhrase("incorrect answer");
+        final GameState gameState = game.guessPhrase(INCORRECT_ANSWER);
         assertThat(gameState.getPreviousGuessCorrect().isPresent()).isTrue();
         assertThat(gameState.getPreviousGuessCorrect().get()).isFalse();
     }
@@ -191,7 +192,7 @@ public class GameTests {
         assertThat(gameStateAfterSecondGuess.getScore()).isEqualTo(0);
     }
 
-    private Queue<Phrase> createPhraseQueue(final Phrase... phrases) {
-        return new LinkedList<Phrase>(Arrays.asList(phrases));
+    private Queue<GamePhrase> createPhraseQueue(final GamePhrase... phrases) {
+        return new LinkedList<GamePhrase>(Arrays.asList(phrases));
     }
 }
