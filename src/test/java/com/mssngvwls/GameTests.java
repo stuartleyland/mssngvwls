@@ -26,7 +26,7 @@ public class GameTests {
     private static final GamePhrase GREETINGS_PHRASE_1 = new GamePhrase(GREETING_1, "Y", GREETINGS_CATEGORY_NAME);
 
     @Mock
-    private PhraseSelector phraseSelector;
+    private GamePhraseSelector phraseSelector;
 
     @InjectMocks
     private Game game;

@@ -4,11 +4,11 @@ import java.util.Optional;
 
 public class Game {
 
-    private final PhraseSelector phraseSelector;
+    private final GamePhraseSelector phraseSelector;
 
     private GameState gameState = null;
 
-    public Game(final PhraseSelector phraseSelector) {
+    public Game(final GamePhraseSelector phraseSelector) {
         this.phraseSelector = phraseSelector;
     }
 

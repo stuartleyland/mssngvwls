@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PhraseSelector {
+public class GamePhraseSelector {
 
     private final PhraseRepository phraseRepository;
     private final PhraseFormatter phraseFormatter;
 
-    public PhraseSelector(final PhraseRepository phraseRepository, final PhraseFormatter phraseFormatter) {
+    public GamePhraseSelector(final PhraseRepository phraseRepository, final PhraseFormatter phraseFormatter) {
         this.phraseRepository = phraseRepository;
         this.phraseFormatter = phraseFormatter;
     }
