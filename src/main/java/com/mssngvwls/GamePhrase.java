@@ -69,4 +69,9 @@ public class GamePhrase {
     public String getCategory() {
         return category;
     }
+
+    @Override
+    public String toString() {
+        return "GamePhrase [fullPhrase=" + fullPhrase + ", phraseWithoutVowels=" + phraseWithoutVowels + ", category=" + category + "]";
+    }
 }
