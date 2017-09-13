@@ -1,5 +1,9 @@
 package com.mssngvwls;
 
+import static com.mssngvwls.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
+import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_1_NAME;
+import static com.mssngvwls.TestUtils.GREETINGS_CATEGORY_NAME;
+import static com.mssngvwls.TestUtils.GREETING_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -17,12 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class GameTests {
 
     private static final String INCORRECT_ANSWER = "incorrect answer";
-    private static final String FOOTBALL_TEAMS_CATEGORY_NAME = "Football Teams";
-    private static final String FOOTBALL_TEAM_1_NAME = "Manchester United";
     private static final GamePhrase FOOTBALL_TEAM_PHRASE_1 = new GamePhrase(FOOTBALL_TEAM_1_NAME, "Mnchstr ntd", FOOTBALL_TEAMS_CATEGORY_NAME);
-
-    private static final String GREETINGS_CATEGORY_NAME = "Greetings";
-    private static final String GREETING_1 = "Yo";
     private static final GamePhrase GREETINGS_PHRASE_1 = new GamePhrase(GREETING_1, "Y", GREETINGS_CATEGORY_NAME);
 
     @Mock
