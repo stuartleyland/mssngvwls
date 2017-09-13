@@ -1,14 +1,8 @@
 package com.mssngvwls;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+public interface CategoryRepository {
 
-@Service
-public class CategoryRepository {
-
-    public List<Category> getAllCategories() {
-        return new ArrayList<>();
-    }
+    public List<Category> getAllCategories();
 }
