@@ -1,8 +1,9 @@
 package com.mssngvwls;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Optional;
 import java.util.Queue;
-import java.util.Scanner;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,27 +19,25 @@ public class MssngvwlsApplication implements CommandLineRunner {
     }
 
     public static void main(final String[] args) {
-        final SpringApplication app = new SpringApplication(MssngvwlsApplication.class);
-        app.run(args);
+        SpringApplication.run(MssngvwlsApplication.class, args);
     }
 
     @Override
     public void run(final String... arg0) throws Exception {
-        try (final Scanner scanner = new Scanner(System.in)) {
-            final Game game = gameFactory.createGame();
-            GameState gameState = game.startGame(2, 2);
-            final Queue<GamePhrase> gamePhrases = gameState.getPhrases();
-            System.out.println("Number of Phrases: " + gamePhrases.size());
+        final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        final Game game = gameFactory.createGame();
+        GameState gameState = game.startGame(2, 2);
+        final Queue<GamePhrase> gamePhrases = gameState.getPhrases();
+        System.out.println("Number of Phrases: " + gamePhrases.size());
 
-            while (!gameState.isGameOver()) {
-                displayGameState(gameState);
-                final String guess = scanner.next();
-                gameState = game.guessPhrase(guess);
-            }
-
-            System.out.println("*** Game Over ***");
+        while (!gameState.isGameOver()) {
             displayGameState(gameState);
+            final String guess = br.readLine();
+            gameState = game.guessPhrase(guess);
         }
+
+        System.out.println("*** Game Over ***");
+        displayGameState(gameState);
     }
 
     private void displayGameState(final GameState gameState) {
