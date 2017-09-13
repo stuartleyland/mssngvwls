@@ -1,6 +1,5 @@
 package com.mssngvwls;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -11,19 +10,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class GamePhraseSelector {
 
-    private final PhraseRepository phraseRepository;
+    private final CategoryRepository categoryRepository;
     private final PhraseFormatter phraseFormatter;
 
-    public GamePhraseSelector(final PhraseRepository phraseRepository, final PhraseFormatter phraseFormatter) {
-        this.phraseRepository = phraseRepository;
+    public GamePhraseSelector(final CategoryRepository categoryRepository, final PhraseFormatter phraseFormatter) {
+        this.categoryRepository = categoryRepository;
         this.phraseFormatter = phraseFormatter;
     }
 
-    public Queue<GamePhrase> generateCategories() {
-        final List<Phrase> phrases = phraseRepository.getPhrases();
-        Collections.shuffle(phrases);
-        return phrases.stream()
-                .limit(10)
+    public Queue<GamePhrase> generateCategories(final int numberOfCategories, final int numberOfPhrasesPerCategory) {
+        final List<Category> categories = categoryRepository.getAllCategories();
+
+        return categories.stream()
+                .filter(category -> category.getPhrases().size() >= numberOfPhrasesPerCategory)
+                .limit(numberOfCategories)
+                .map(Category::getPhrases)
+                .limit(numberOfPhrasesPerCategory)
+                .flatMap(List::stream)
                 .map(phrase -> new GamePhrase(phrase.getFullPhrase(), phraseFormatter.format(phrase.getFullPhrase()), phrase.getCategory().getName()))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
