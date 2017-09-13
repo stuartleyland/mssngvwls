@@ -12,8 +12,8 @@ public class Game {
         this.phraseSelector = phraseSelector;
     }
 
-    public GameState startGame() {
-        gameState = new GameState(phraseSelector.generateCategories());
+    public GameState startGame(final int numberOfCategories, final int numberOfPhrasesPerCategory) {
+        gameState = new GameState(phraseSelector.generateCategories(numberOfCategories, numberOfPhrasesPerCategory));
         nextPhrase();
 
         return gameState;
