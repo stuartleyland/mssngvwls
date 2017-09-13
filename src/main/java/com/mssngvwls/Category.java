@@ -4,13 +4,8 @@ import java.util.List;
 
 public class Category {
 
-    private final String name;
-    private final List<Phrase> phrases;
-
-    public Category(final String name, final List<Phrase> phrases) {
-        this.name = name;
-        this.phrases = phrases;
-    }
+    private String name;
+    private List<Phrase> phrases;
 
     @Override
     public int hashCode() {
@@ -54,7 +49,16 @@ public class Category {
         return name;
     }
 
+    public void setName(final String name) {
+        this.name = name;
+    }
+
     public List<Phrase> getPhrases() {
         return phrases;
     }
+
+    public void setPhrases(final List<Phrase> phrases) {
+        this.phrases = phrases;
+    }
+
 }

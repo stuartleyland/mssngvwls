@@ -2,13 +2,8 @@ package com.mssngvwls;
 
 public class Phrase {
 
-    private final String fullPhrase;
-    private final Category category;
-
-    public Phrase(final String fullPhrase, final Category category) {
-        this.fullPhrase = fullPhrase;
-        this.category = category;
-    }
+    private String fullPhrase;
+    private Category category;
 
     @Override
     public int hashCode() {
@@ -52,7 +47,15 @@ public class Phrase {
         return fullPhrase;
     }
 
+    public void setFullPhrase(final String fullPhrase) {
+        this.fullPhrase = fullPhrase;
+    }
+
     public Category getCategory() {
         return category;
+    }
+
+    public void setCategory(final Category category) {
+        this.category = category;
     }
 }
