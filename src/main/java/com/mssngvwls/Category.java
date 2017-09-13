@@ -1,11 +1,15 @@
 package com.mssngvwls;
 
+import java.util.List;
+
 public class Category {
 
     private final String name;
+    private final List<Phrase> phrases;
 
-    public Category(final String name) {
+    public Category(final String name, final List<Phrase> phrases) {
         this.name = name;
+        this.phrases = phrases;
     }
 
     @Override
@@ -13,6 +17,7 @@ public class Category {
         final int prime = 31;
         int result = 1;
         result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+        result = (prime * result) + ((phrases == null) ? 0 : phrases.hashCode());
         return result;
     }
 
@@ -35,10 +40,21 @@ public class Category {
         } else if (!name.equals(other.name)) {
             return false;
         }
+        if (phrases == null) {
+            if (other.phrases != null) {
+                return false;
+            }
+        } else if (!phrases.equals(other.phrases)) {
+            return false;
+        }
         return true;
     }
 
     public String getName() {
         return name;
+    }
+
+    public List<Phrase> getPhrases() {
+        return phrases;
     }
 }
