@@ -11,7 +11,7 @@ public class GameFactory {
         this.phraseSelector = phraseSelector;
     }
 
-    public GameState startGame(final int numberOfCategories, final int numberOfPhrasesPerCategory) {
-        return new Game(phraseSelector).startGame(numberOfCategories, numberOfPhrasesPerCategory);
+    public Game createGame() {
+        return new Game(phraseSelector);
     }
 }
