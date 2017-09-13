@@ -8,4 +8,9 @@ public class TestUtils {
 
     public static final String GREETINGS_CATEGORY_NAME = "Greetings";
     public static final String GREETING_1 = "Yo";
+
+    public static final String GOODBYES_CATEGORY_NAME = "Goodbyes";
+    public static final String GOODBYES_1 = "Adios";
+    public static final String GOODBYES_2 = "Auf Wiedersehen";
+    public static final String GOODBYES_3 = "Cya";
 }
