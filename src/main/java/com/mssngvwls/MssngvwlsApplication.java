@@ -28,7 +28,7 @@ public class MssngvwlsApplication implements CommandLineRunner {
         final Game game = gameFactory.createGame();
         GameState gameState = game.startGame(2, 2);
         final Queue<GamePhrase> gamePhrases = gameState.getPhrases();
-        System.out.println("Number of Phrases: " + gamePhrases.size());
+        System.out.println("Number of Phrases remaining: " + gamePhrases.size());
 
         while (!gameState.isGameOver()) {
             displayGameState(gameState);
