@@ -1,9 +1,11 @@
 package com.mssngvwls;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Category {
 
+    private final UUID uuid = UUID.randomUUID();
     private String name;
     private List<Phrase> phrases;
 
@@ -43,6 +45,15 @@ public class Category {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Category [uuid=" + uuid + ", name=" + name + "]";
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getName() {
