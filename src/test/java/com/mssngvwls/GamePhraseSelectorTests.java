@@ -1,8 +1,15 @@
 package com.mssngvwls;
 
+import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_1;
+import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_2;
+import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_3;
+import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_4;
+import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_CATEGORY_NAME;
 import static com.mssngvwls.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
 import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_1_NAME;
 import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_2_NAME;
+import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_3_NAME;
+import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_4_NAME;
 import static com.mssngvwls.TestUtils.GOODBYES_1;
 import static com.mssngvwls.TestUtils.GOODBYES_2;
 import static com.mssngvwls.TestUtils.GOODBYES_3;
@@ -113,7 +120,12 @@ public class GamePhraseSelectorTests {
                 .withPhrases(GOODBYES_1, GOODBYES_2, GOODBYES_3)
                 .build();
 
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes));
+        final Category europeanLanguages = new CategoryBuilder()
+                .withCategoryName(EUROPEAN_LANGUAGES_CATEGORY_NAME)
+                .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
+                .build();
+
+        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes, europeanLanguages));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -122,6 +134,38 @@ public class GamePhraseSelectorTests {
                 .withGamePhraseFor(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_2_NAME, PHRASE_WITHOUT_VOWELS)
                 .withGamePhraseFor(GOODBYES_CATEGORY_NAME, GOODBYES_1, PHRASE_WITHOUT_VOWELS)
                 .withGamePhraseFor(GOODBYES_CATEGORY_NAME, GOODBYES_2, PHRASE_WITHOUT_VOWELS)
+                .build();
+        assertThat(gamePhrases).isEqualTo(expectedGamePhrases);
+    }
+
+    @Test
+    public void correct_number_of_phrases_for_matching_categories_are_returned() {
+        final Category footballTeams = new CategoryBuilder()
+                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
+                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME, FOOTBALL_TEAM_3_NAME, FOOTBALL_TEAM_4_NAME)
+                .build();
+
+        final Category greetings = new CategoryBuilder()
+                .withCategoryName(GREETINGS_CATEGORY_NAME)
+                .withPhrase(GREETING_1)
+                .build();
+
+        final Category europeanLanguages = new CategoryBuilder()
+                .withCategoryName(EUROPEAN_LANGUAGES_CATEGORY_NAME)
+                .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
+                .build();
+
+        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, europeanLanguages));
+
+        final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 3);
+
+        final Queue<GamePhrase> expectedGamePhrases = new GamePhraseQueueBuilder()
+                .withGamePhraseFor(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME, PHRASE_WITHOUT_VOWELS)
+                .withGamePhraseFor(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_2_NAME, PHRASE_WITHOUT_VOWELS)
+                .withGamePhraseFor(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_3_NAME, PHRASE_WITHOUT_VOWELS)
+                .withGamePhraseFor(EUROPEAN_LANGUAGES_CATEGORY_NAME, EUROPEAN_LANGUAGES_1, PHRASE_WITHOUT_VOWELS)
+                .withGamePhraseFor(EUROPEAN_LANGUAGES_CATEGORY_NAME, EUROPEAN_LANGUAGES_2, PHRASE_WITHOUT_VOWELS)
+                .withGamePhraseFor(EUROPEAN_LANGUAGES_CATEGORY_NAME, EUROPEAN_LANGUAGES_3, PHRASE_WITHOUT_VOWELS)
                 .build();
         assertThat(gamePhrases).isEqualTo(expectedGamePhrases);
     }

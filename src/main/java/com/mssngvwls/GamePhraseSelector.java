@@ -25,8 +25,7 @@ public class GamePhraseSelector {
                 .filter(category -> category.getPhrases().size() >= numberOfPhrasesPerCategory)
                 .limit(numberOfCategories)
                 .map(Category::getPhrases)
-                .limit(numberOfPhrasesPerCategory)
-                .flatMap(List::stream)
+                .flatMap(phrases -> phrases.stream().limit(numberOfPhrasesPerCategory))
                 .map(phrase -> new GamePhrase(phrase.getFullPhrase(), phraseFormatter.format(phrase.getFullPhrase()), phrase.getCategory().getName()))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
