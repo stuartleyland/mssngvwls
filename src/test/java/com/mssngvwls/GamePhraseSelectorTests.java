@@ -122,7 +122,6 @@ public class GamePhraseSelectorTests {
                 .withGamePhraseFor(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_2_NAME, PHRASE_WITHOUT_VOWELS)
                 .withGamePhraseFor(GOODBYES_CATEGORY_NAME, GOODBYES_1, PHRASE_WITHOUT_VOWELS)
                 .withGamePhraseFor(GOODBYES_CATEGORY_NAME, GOODBYES_2, PHRASE_WITHOUT_VOWELS)
-                .withGamePhraseFor(GOODBYES_CATEGORY_NAME, GOODBYES_3, PHRASE_WITHOUT_VOWELS)
                 .build();
         assertThat(gamePhrases).isEqualTo(expectedGamePhrases);
     }
