@@ -21,6 +21,11 @@ public class CategoryBuilder {
         return this;
     }
 
+    public CategoryBuilder withPhrases(final List<String> fullPhrases) {
+        fullPhrases.forEach(this::withPhrase);
+        return this;
+    }
+
     public Category build() {
         category.setPhrases(phrases);
         return category;

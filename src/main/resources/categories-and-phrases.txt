@@ -1,0 +1,3 @@
+Football Teams|Manchester United|Arsenal|Swansea|Chelsea|Liverpool|Hartlepool United
+Greetings|Yo|How do you do|How's tricks|Hello|Bonjour|Guten Tag|Hola
+Goodbyes|Adios|Auf Wiedersehen|Cya|Au revoir|Bye|Laters
