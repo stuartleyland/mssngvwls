@@ -15,18 +15,18 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileCategoryRepository implements CategoryRepository {
+public class ClassPathFileCategoryRepository implements CategoryRepository {
 
     public static final String ERROR_READING_FILE_MESSAGE_TEMPLATE = "Error reading file [%s]";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileCategoryRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassPathFileCategoryRepository.class);
 
     private volatile List<Category> categories = null;
     private final Object lock = new Object();
 
     private final String filename;
 
-    public FileCategoryRepository(@Value("${categoryFileLocation}") final String filename) {
+    public ClassPathFileCategoryRepository(@Value("${categoryFileLocation}") final String filename) {
         this.filename = filename;
     }
 
