@@ -100,8 +100,7 @@ public class GamePhraseSelectorTests {
     public void first_matching_categories_are_used() {
         final Category footballTeams = new CategoryBuilder()
                 .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrase(FOOTBALL_TEAM_1_NAME)
-                .withPhrase(FOOTBALL_TEAM_2_NAME)
+                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME)
                 .build();
 
         final Category greetings = new CategoryBuilder()
@@ -111,9 +110,7 @@ public class GamePhraseSelectorTests {
 
         final Category goodbyes = new CategoryBuilder()
                 .withCategoryName(GOODBYES_CATEGORY_NAME)
-                .withPhrase(GOODBYES_1)
-                .withPhrase(GOODBYES_2)
-                .withPhrase(GOODBYES_3)
+                .withPhrases(GOODBYES_1, GOODBYES_2, GOODBYES_3)
                 .build();
 
         when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes));

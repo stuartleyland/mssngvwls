@@ -1,6 +1,7 @@
 package com.mssngvwls;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CategoryBuilder {
@@ -19,6 +20,10 @@ public class CategoryBuilder {
         phrase.setCategory(category);
         this.phrases.add(phrase);
         return this;
+    }
+
+    public CategoryBuilder withPhrases(final String... fullPhrases) {
+        return withPhrases(Arrays.asList(fullPhrases));
     }
 
     public CategoryBuilder withPhrases(final List<String> fullPhrases) {
