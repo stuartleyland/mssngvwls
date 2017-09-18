@@ -1,11 +1,9 @@
 package com.mssngvwls;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Category {
 
-    private final UUID uuid = UUID.randomUUID();
     private String name;
     private List<Phrase> phrases;
 
@@ -14,7 +12,6 @@ public class Category {
         final int prime = 31;
         int result = 1;
         result = (prime * result) + ((name == null) ? 0 : name.hashCode());
-        result = (prime * result) + ((phrases == null) ? 0 : phrases.hashCode());
         return result;
     }
 
@@ -37,23 +34,12 @@ public class Category {
         } else if (!name.equals(other.name)) {
             return false;
         }
-        if (phrases == null) {
-            if (other.phrases != null) {
-                return false;
-            }
-        } else if (!phrases.equals(other.phrases)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Category [uuid=" + uuid + ", name=" + name + "]";
-    }
-
-    public UUID getUuid() {
-        return uuid;
+        return "Category [name=" + name + ", phrases=" + phrases + "]";
     }
 
     public String getName() {

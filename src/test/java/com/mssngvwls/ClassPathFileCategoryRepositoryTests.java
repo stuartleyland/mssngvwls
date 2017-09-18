@@ -37,4 +37,21 @@ public class ClassPathFileCategoryRepositoryTests {
                 new PhraseBuilder().withFullPhrase("Liverpool").withCategory(footballTeamsCategory).build(),
                 new PhraseBuilder().withFullPhrase("Hartlepool United").withCategory(footballTeamsCategory).build());
     }
+
+    @Test
+    public void multiple_categories_are_parsed() {
+        final ClassPathFileCategoryRepository repository = new ClassPathFileCategoryRepository("multiple-categories.txt");
+        final List<Category> categories = repository.getAllCategories();
+
+        final Category footballTeamsCategory = new CategoryBuilder()
+                .withCategoryName("Football Teams")
+                .withPhrases("Manchester United", "Liverpool", "Hartlepool United").build();
+
+        final Category languagesCategory = new CategoryBuilder()
+                .withCategoryName("Languages")
+                .withPhrases("English", "Italian", "French", "German")
+                .build();
+
+        assertThat(categories).containsExactly(footballTeamsCategory, languagesCategory);
+    }
 }

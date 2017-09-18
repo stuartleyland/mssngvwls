@@ -1,10 +1,7 @@
 package com.mssngvwls;
 
-import java.util.UUID;
-
 public class Phrase {
 
-    private final UUID uuid = UUID.randomUUID();
     private String fullPhrase;
     private Category category;
 
@@ -12,7 +9,6 @@ public class Phrase {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = (prime * result) + ((category == null) ? 0 : category.getUuid().hashCode());
         result = (prime * result) + ((fullPhrase == null) ? 0 : fullPhrase.hashCode());
         return result;
     }
@@ -29,15 +25,6 @@ public class Phrase {
             return false;
         }
         final Phrase other = (Phrase) obj;
-        if ((category == null) && (other.category != null)) {
-            return false;
-        }
-        if ((category != null) && (other.category == null)) {
-            return false;
-        }
-        if ((category != null) && (other.category != null) && !category.getUuid().equals(other.category.getUuid())) {
-            return false;
-        }
         if (fullPhrase == null) {
             if (other.fullPhrase != null) {
                 return false;
@@ -50,11 +37,7 @@ public class Phrase {
 
     @Override
     public String toString() {
-        return "Phrase [uuid=" + uuid + ", fullPhrase=" + fullPhrase + ", category=" + category.toString() + "]";
-    }
-
-    public UUID getUuid() {
-        return uuid;
+        return "Phrase [fullPhrase=" + fullPhrase + ", category=" + category + "]";
     }
 
     public String getFullPhrase() {

@@ -1,0 +1,2 @@
+Football Teams|Manchester United|Liverpool|Hartlepool United
+Languages|English|Italian|French|German
