@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 

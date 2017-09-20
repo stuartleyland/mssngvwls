@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.repository.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -6,6 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import java.util.List;
 
 import org.junit.Test;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.builder.CategoryBuilder;
+import com.mssngvwls.model.builder.PhraseBuilder;
+import com.mssngvwls.service.repository.ClassPathFileCategoryRepository;
+import com.mssngvwls.service.repository.RepositoryException;
 
 public class ClassPathFileCategoryRepositoryTests {
 

@@ -1,4 +1,7 @@
-package com.mssngvwls;
+package com.mssngvwls.model.builder;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.Phrase;
 
 public class PhraseBuilder {
 

@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.model;
 
 import java.util.List;
 

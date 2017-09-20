@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -9,8 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.mssngvwls.service.game.PhraseRespacer;
+import com.mssngvwls.service.util.RandomNumberGenerator;
+
 @RunWith(MockitoJUnitRunner.class)
-public class PhaseRespacerTests {
+public class PhraseRespacerTests {
 
     @Mock
     private RandomNumberGenerator randomNumberGenerator;

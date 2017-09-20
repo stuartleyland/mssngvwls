@@ -1,9 +1,11 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.mssngvwls.service.game.VowelRemover;
 
 public class VowelRemoverTests {
 

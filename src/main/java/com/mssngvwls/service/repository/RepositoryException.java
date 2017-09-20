@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.repository;
 
 public class RepositoryException extends RuntimeException {
 

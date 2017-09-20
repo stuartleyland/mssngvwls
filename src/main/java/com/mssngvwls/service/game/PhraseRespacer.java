@@ -1,7 +1,9 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import com.mssngvwls.service.util.RandomNumberGenerator;
 
 @Service
 public class PhraseRespacer {

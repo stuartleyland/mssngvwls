@@ -1,8 +1,11 @@
-package com.mssngvwls;
+package com.mssngvwls.model.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.Phrase;
 
 public class CategoryBuilder {
 

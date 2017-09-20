@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game;
 
 import org.springframework.stereotype.Service;
 

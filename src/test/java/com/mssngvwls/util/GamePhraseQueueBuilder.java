@@ -1,7 +1,9 @@
-package com.mssngvwls;
+package com.mssngvwls.util;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+import com.mssngvwls.model.GamePhrase;
 
 public class GamePhraseQueueBuilder {
 

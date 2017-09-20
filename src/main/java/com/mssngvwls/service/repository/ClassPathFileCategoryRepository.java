@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.repository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.builder.CategoryBuilder;
 
 @Service
 public class ClassPathFileCategoryRepository implements CategoryRepository {

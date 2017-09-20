@@ -9,6 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.service.game.Game;
+import com.mssngvwls.service.game.GameFactory;
+import com.mssngvwls.service.game.GameState;
+
 @SpringBootApplication
 public class MssngvwlsApplication implements CommandLineRunner {
 

@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,6 +6,10 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.service.repository.CategoryRepository;
 
 @Service
 public class GamePhraseSelector {

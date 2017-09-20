@@ -1,6 +1,8 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game;
 
 import java.util.Optional;
+
+import com.mssngvwls.model.GamePhrase;
 
 public class Game {
 

@@ -1,9 +1,9 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game.test;
 
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_1_NAME;
-import static com.mssngvwls.TestUtils.GREETINGS_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.GREETING_1;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_1_NAME;
+import static com.mssngvwls.util.TestUtils.GREETINGS_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.GREETING_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +16,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.service.game.Game;
+import com.mssngvwls.service.game.GamePhraseSelector;
+import com.mssngvwls.service.game.GameState;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameTests {

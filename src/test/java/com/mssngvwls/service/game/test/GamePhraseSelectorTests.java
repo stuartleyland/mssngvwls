@@ -1,21 +1,21 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game.test;
 
-import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_1;
-import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_2;
-import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_3;
-import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_4;
-import static com.mssngvwls.TestUtils.EUROPEAN_LANGUAGES_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_1_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_2_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_3_NAME;
-import static com.mssngvwls.TestUtils.FOOTBALL_TEAM_4_NAME;
-import static com.mssngvwls.TestUtils.GOODBYES_1;
-import static com.mssngvwls.TestUtils.GOODBYES_2;
-import static com.mssngvwls.TestUtils.GOODBYES_3;
-import static com.mssngvwls.TestUtils.GOODBYES_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.GREETINGS_CATEGORY_NAME;
-import static com.mssngvwls.TestUtils.GREETING_1;
+import static com.mssngvwls.util.TestUtils.EUROPEAN_LANGUAGES_1;
+import static com.mssngvwls.util.TestUtils.EUROPEAN_LANGUAGES_2;
+import static com.mssngvwls.util.TestUtils.EUROPEAN_LANGUAGES_3;
+import static com.mssngvwls.util.TestUtils.EUROPEAN_LANGUAGES_4;
+import static com.mssngvwls.util.TestUtils.EUROPEAN_LANGUAGES_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_1_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_2_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_3_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_4_NAME;
+import static com.mssngvwls.util.TestUtils.GOODBYES_1;
+import static com.mssngvwls.util.TestUtils.GOODBYES_2;
+import static com.mssngvwls.util.TestUtils.GOODBYES_3;
+import static com.mssngvwls.util.TestUtils.GOODBYES_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.GREETINGS_CATEGORY_NAME;
+import static com.mssngvwls.util.TestUtils.GREETING_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -29,6 +29,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.model.builder.CategoryBuilder;
+import com.mssngvwls.service.game.GamePhraseSelector;
+import com.mssngvwls.service.game.PhraseFormatter;
+import com.mssngvwls.service.repository.CategoryRepository;
+import com.mssngvwls.util.GamePhraseQueueBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GamePhraseSelectorTests {

@@ -1,4 +1,4 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -8,6 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.mssngvwls.service.game.PhraseFormatter;
+import com.mssngvwls.service.game.PhraseRespacer;
+import com.mssngvwls.service.game.VowelRemover;
+import com.mssngvwls.service.util.RandomNumberGenerator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhraseFormatterTests {

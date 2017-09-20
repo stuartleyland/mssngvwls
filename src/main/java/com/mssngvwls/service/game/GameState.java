@@ -1,7 +1,9 @@
-package com.mssngvwls;
+package com.mssngvwls.service.game;
 
 import java.util.Optional;
 import java.util.Queue;
+
+import com.mssngvwls.model.GamePhrase;
 
 public class GameState {
 
