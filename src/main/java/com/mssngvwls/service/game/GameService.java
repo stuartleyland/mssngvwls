@@ -31,7 +31,7 @@ public class GameService {
 
         nextPhrase(game);
 
-        return game;
+        return gameRepository.save(game);
     }
 
     private void nextPhrase(final Game game) {
@@ -57,7 +57,7 @@ public class GameService {
         }
 
         nextPhrase(game);
-        return game;
+        return gameRepository.save(game);
     }
 
     private void incrementScore(final Game game) {

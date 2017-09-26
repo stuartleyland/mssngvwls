@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mssngvwls.model.Game;
 import com.mssngvwls.model.GameStartParameters;
-import com.mssngvwls.service.game.Game;
+import com.mssngvwls.service.game.GameService;
 import com.mssngvwls.service.game.GameFactory;
-import com.mssngvwls.service.game.GameState;
 
 @RestController
 @RequestMapping("/game")
@@ -23,8 +23,14 @@ public class GameController {
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ResponseBody
-    public GameState startGame(@RequestBody final GameStartParameters parameters) {
-        final Game game = gameFactory.createGame();
+    public Game startGame(@RequestBody final GameStartParameters parameters) {
+        final GameService game = gameFactory.createGame();
         return game.startGame(parameters.getNumberOfCategories(), parameters.getNumberOfPhrasesPerCategory());
+    }
+
+    @RequestMapping(value = "/guess", method = RequestMethod.POST)
+    @ResponseBody
+    public Game guess() {
+        return null;
     }
 }

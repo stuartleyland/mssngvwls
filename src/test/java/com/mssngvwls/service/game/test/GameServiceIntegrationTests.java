@@ -2,6 +2,7 @@ package com.mssngvwls.service.game.test;
 
 import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAMS_CATEGORY_NAME;
 import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_1_NAME;
+import static com.mssngvwls.util.TestUtils.FOOTBALL_TEAM_2_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -40,5 +41,21 @@ public class GameServiceIntegrationTests {
         assertThat(game.getCurrentPhrase().isPresent()).isTrue();
         assertThat(game.getCurrentPhrase().get().getFullPhrase()).isEqualTo(FOOTBALL_TEAM_1_NAME);
         assertThat(game.getCurrentPhrase().get().getCategory()).isEqualTo(FOOTBALL_TEAMS_CATEGORY_NAME);
+    }
+
+    @Test
+    public void can_make_a_guess() {
+        final Category footballTeams = new CategoryBuilder()
+                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
+                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME)
+                .build();
+        categoryRepository.save(footballTeams);
+
+        final Game game = gameService.startGame(1, 2);
+
+        final Game gameAfterGuess = gameService.guessPhrase(game.getId(), FOOTBALL_TEAM_1_NAME);
+        assertThat(gameAfterGuess.getPreviousGuessCorrect().get()).isTrue();
+        assertThat(gameAfterGuess.getCurrentPhrase().get().getFullPhrase()).isEqualTo(FOOTBALL_TEAM_2_NAME);
+
     }
 }
