@@ -33,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.mssngvwls.model.Category;
 import com.mssngvwls.model.GamePhrase;
 import com.mssngvwls.model.builder.CategoryBuilder;
+import com.mssngvwls.model.builder.GamePhraseBuilder;
 import com.mssngvwls.service.game.GamePhraseSelector;
 import com.mssngvwls.service.game.PhraseFormatter;
 import com.mssngvwls.service.repository.CategoryRepository;
@@ -66,7 +67,11 @@ public class GamePhraseSelectorTests {
         when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(category));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(1, 1);
-        assertThat(gamePhrases).containsExactly(new GamePhrase(FOOTBALL_TEAM_1_NAME, PHRASE_WITHOUT_VOWELS, FOOTBALL_TEAMS_CATEGORY_NAME));
+        assertThat(gamePhrases).containsExactly(new GamePhraseBuilder()
+                .withCategory(FOOTBALL_TEAMS_CATEGORY_NAME)
+                .withFullPhrase(FOOTBALL_TEAM_1_NAME)
+                .withPhraseWithoutVowels(PHRASE_WITHOUT_VOWELS)
+                .build());
     }
 
     @Test

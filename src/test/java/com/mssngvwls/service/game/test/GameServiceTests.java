@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mssngvwls.model.Game;
 import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.model.builder.GamePhraseBuilder;
 import com.mssngvwls.service.game.GamePhraseSelector;
 import com.mssngvwls.service.game.GameService;
 import com.mssngvwls.service.repository.GameRepository;
@@ -27,8 +28,16 @@ import com.mssngvwls.service.repository.GameRepository;
 public class GameServiceTests {
 
     private static final String INCORRECT_ANSWER = "incorrect answer";
-    private static final GamePhrase FOOTBALL_TEAM_PHRASE_1 = new GamePhrase(FOOTBALL_TEAM_1_NAME, "Mnchstr ntd", FOOTBALL_TEAMS_CATEGORY_NAME);
-    private static final GamePhrase GREETINGS_PHRASE_1 = new GamePhrase(GREETING_1, "Y", GREETINGS_CATEGORY_NAME);
+    private static final GamePhrase FOOTBALL_TEAM_PHRASE_1 = new GamePhraseBuilder()
+            .withCategory(FOOTBALL_TEAMS_CATEGORY_NAME)
+            .withFullPhrase(FOOTBALL_TEAM_1_NAME)
+            .withPhraseWithoutVowels("Mnchstr ntd")
+            .build();
+    private static final GamePhrase GREETINGS_PHRASE_1 = new GamePhraseBuilder()
+            .withCategory(GREETINGS_CATEGORY_NAME)
+            .withFullPhrase(GREETING_1)
+            .withPhraseWithoutVowels("Y")
+            .build();
 
     @Mock
     private GamePhraseSelector phraseSelector;
@@ -100,8 +109,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameAfterGuess = gameService.guessPhrase(id, INCORRECT_ANSWER);
         assertThat(gameAfterGuess.getScore()).isEqualTo(-1);
     }
@@ -111,8 +120,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameAfterGuess = gameService.guessPhrase(id, INCORRECT_ANSWER);
         assertThat(gameAfterGuess.getPreviousGuessCorrect().isPresent()).isTrue();
         assertThat(gameAfterGuess.getPreviousGuessCorrect().get()).isFalse();
@@ -123,8 +132,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         assertThat(gameAfterGuess.getPreviousGuessCorrect().isPresent()).isTrue();
         assertThat(gameAfterGuess.getPreviousGuessCorrect().get()).isTrue();
@@ -135,8 +144,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         assertThat(gameAfterGuess.getScore()).isEqualTo(1);
     }
@@ -146,8 +155,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         assertThat(gameAfterGuess.isGameOver()).isTrue();
     }
@@ -157,8 +166,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(1, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1));
         final Game gameAtStart = gameService.startGame(1, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         assertThat(gameAtStart.getPhrases()).doesNotContain(FOOTBALL_TEAM_PHRASE_1);
     }
 
@@ -167,8 +176,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(2, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1, GREETINGS_PHRASE_1));
         final Game gameAtStart = gameService.startGame(2, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameStateAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
 
         assertThat(gameStateAfterGuess.getCurrentPhrase().isPresent()).isTrue();
@@ -182,8 +191,8 @@ public class GameServiceTests {
 
         assertThat(gameAtStart.getCurrentPhrase().isPresent()).isTrue();
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameStateAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         assertThat(gameStateAfterGuess.getCurrentPhrase().isPresent()).isFalse();
     }
@@ -195,8 +204,8 @@ public class GameServiceTests {
 
         assertThat(gameAtStart.getCurrentCategory().isPresent()).isTrue();
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
         final Game gameStateAfterGuess = gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         assertThat(gameStateAfterGuess.getCurrentCategory().isPresent()).isFalse();
     }
@@ -206,8 +215,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(2, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1, GREETINGS_PHRASE_1));
         final Game gameAtStart = gameService.startGame(2, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
 
         gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         final Game gameAfterSecondGuess = gameService.guessPhrase(id, GREETING_1);
@@ -219,8 +228,8 @@ public class GameServiceTests {
         when(phraseSelector.generateCategories(2, 1)).thenReturn(createPhraseQueue(FOOTBALL_TEAM_PHRASE_1, GREETINGS_PHRASE_1));
         final Game gameAtStart = gameService.startGame(2, 1);
 
-        final int id = gameAtStart.getId();
-        when(gameRepository.findById(id)).thenReturn(gameAtStart);
+        final Long id = gameAtStart.getId();
+        when(gameRepository.findOne(id)).thenReturn(gameAtStart);
 
         gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         final Game gameStateAfterSecondGuess = gameService.guessPhrase(id, "incorrect guess");

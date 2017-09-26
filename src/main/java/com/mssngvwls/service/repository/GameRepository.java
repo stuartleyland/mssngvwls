@@ -1,13 +1,9 @@
 package com.mssngvwls.service.repository;
 
-import org.springframework.stereotype.Service;
+import org.springframework.data.repository.CrudRepository;
 
 import com.mssngvwls.model.Game;
 
-@Service
-public class GameRepository {
+public interface GameRepository extends CrudRepository<Game, Long> {
 
-    public Game findById(final int id) {
-        return new Game();
-    }
 }

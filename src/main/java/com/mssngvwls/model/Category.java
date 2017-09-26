@@ -2,16 +2,29 @@ package com.mssngvwls.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
+
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Phrase> phrases;
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+        result = (prime * result) + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -27,19 +40,22 @@ public class Category {
             return false;
         }
         final Category other = (Category) obj;
-        if (name == null) {
-            if (other.name != null) {
+        if (id == null) {
+            if (other.id != null) {
                 return false;
             }
-        } else if (!name.equals(other.name)) {
+        } else if (!id.equals(other.id)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Category [name=" + name + ", phrases=" + phrases + "]";
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     public String getName() {

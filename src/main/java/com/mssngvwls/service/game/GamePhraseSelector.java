@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mssngvwls.model.Category;
 import com.mssngvwls.model.GamePhrase;
+import com.mssngvwls.model.builder.GamePhraseBuilder;
 import com.mssngvwls.service.repository.CategoryRepository;
 
 @Service
@@ -30,7 +31,11 @@ public class GamePhraseSelector {
                 .limit(numberOfCategories)
                 .map(Category::getPhrases)
                 .flatMap(phrases -> phrases.stream().limit(numberOfPhrasesPerCategory))
-                .map(phrase -> new GamePhrase(phrase.getFullPhrase(), phraseFormatter.format(phrase.getFullPhrase()), phrase.getCategory().getName()))
+                .map(phrase -> new GamePhraseBuilder()
+                        .withCategory(phrase.getCategory().getName())
+                        .withFullPhrase(phrase.getFullPhrase())
+                        .withPhraseWithoutVowels(phraseFormatter.format(phrase.getFullPhrase()))
+                        .build())
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 

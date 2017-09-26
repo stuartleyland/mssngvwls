@@ -1,24 +1,25 @@
 package com.mssngvwls.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class GamePhrase {
 
-    private final String fullPhrase;
-    private final String phraseWithoutVowels;
-    private final String category;
-
-    public GamePhrase(final String fullPhrase, final String phraseWithoutVowels, final String category) {
-        this.fullPhrase = fullPhrase;
-        this.phraseWithoutVowels = phraseWithoutVowels;
-        this.category = category;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String fullPhrase;
+    private String phraseWithoutVowels;
+    private String category;
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = (prime * result) + ((category == null) ? 0 : category.hashCode());
-        result = (prime * result) + ((fullPhrase == null) ? 0 : fullPhrase.hashCode());
-        result = (prime * result) + ((phraseWithoutVowels == null) ? 0 : phraseWithoutVowels.hashCode());
+        result = (prime * result) + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -34,44 +35,45 @@ public class GamePhrase {
             return false;
         }
         final GamePhrase other = (GamePhrase) obj;
-        if (category == null) {
-            if (other.category != null) {
+        if (id == null) {
+            if (other.id != null) {
                 return false;
             }
-        } else if (!category.equals(other.category)) {
-            return false;
-        }
-        if (fullPhrase == null) {
-            if (other.fullPhrase != null) {
-                return false;
-            }
-        } else if (!fullPhrase.equals(other.fullPhrase)) {
-            return false;
-        }
-        if (phraseWithoutVowels == null) {
-            if (other.phraseWithoutVowels != null) {
-                return false;
-            }
-        } else if (!phraseWithoutVowels.equals(other.phraseWithoutVowels)) {
+        } else if (!id.equals(other.id)) {
             return false;
         }
         return true;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     public String getFullPhrase() {
         return fullPhrase;
     }
 
+    public void setFullPhrase(final String fullPhrase) {
+        this.fullPhrase = fullPhrase;
+    }
+
     public String getPhraseWithoutVowels() {
         return phraseWithoutVowels;
+    }
+
+    public void setPhraseWithoutVowels(final String phraseWithoutVowels) {
+        this.phraseWithoutVowels = phraseWithoutVowels;
     }
 
     public String getCategory() {
         return category;
     }
 
-    @Override
-    public String toString() {
-        return "GamePhrase [fullPhrase=" + fullPhrase + ", phraseWithoutVowels=" + phraseWithoutVowels + ", category=" + category + "]";
+    public void setCategory(final String category) {
+        this.category = category;
     }
 }
