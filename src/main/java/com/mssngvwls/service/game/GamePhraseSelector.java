@@ -24,7 +24,7 @@ public class GamePhraseSelector {
     }
 
     public Queue<GamePhrase> generateCategories(final int numberOfCategories, final int numberOfPhrasesPerCategory) {
-        final List<Category> categories = categoryRepository.getAllCategories();
+        final List<Category> categories = categoryRepository.findAll();
 
         return categories.stream()
                 .filter(category -> category.getPhrases().size() >= numberOfPhrasesPerCategory)

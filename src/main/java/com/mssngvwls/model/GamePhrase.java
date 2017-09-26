@@ -45,6 +45,11 @@ public class GamePhrase {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "GamePhrase [id=" + id + ", fullPhrase=" + fullPhrase + ", phraseWithoutVowels=" + phraseWithoutVowels + ", category=" + category + "]";
+    }
+
     public Long getId() {
         return id;
     }

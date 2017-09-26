@@ -1,16 +1,8 @@
 package com.mssngvwls.service.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mssngvwls.model.Phrase;
 
-@Service
-public class PhraseRepository {
-
-    public List<Phrase> getPhrases() {
-        return new ArrayList<>();
-    }
+public interface PhraseRepository extends JpaRepository<Phrase, Long> {
 }

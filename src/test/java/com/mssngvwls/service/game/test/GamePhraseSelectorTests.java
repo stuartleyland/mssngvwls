@@ -64,7 +64,7 @@ public class GamePhraseSelectorTests {
                 .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
                 .withPhrase(FOOTBALL_TEAM_1_NAME)
                 .build();
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(category));
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(category));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(1, 1);
         assertThat(gamePhrases).containsExactly(new GamePhraseBuilder()
@@ -87,7 +87,7 @@ public class GamePhraseSelectorTests {
                 .withPhrase(GREETING_1)
                 .build();
 
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings));
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -108,7 +108,7 @@ public class GamePhraseSelectorTests {
                 .withCategoryName(GREETINGS_CATEGORY_NAME)
                 .build();
 
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings));
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -138,7 +138,7 @@ public class GamePhraseSelectorTests {
                 .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
                 .build();
 
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes, europeanLanguages));
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes, europeanLanguages));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -168,7 +168,7 @@ public class GamePhraseSelectorTests {
                 .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
                 .build();
 
-        when(categoryRepository.getAllCategories()).thenReturn(Arrays.asList(footballTeams, greetings, europeanLanguages));
+        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings, europeanLanguages));
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 3);
 
