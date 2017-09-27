@@ -7,30 +7,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mssngvwls.model.Game;
-import com.mssngvwls.model.GameStartParameters;
+import com.mssngvwls.service.controller.model.GameStartParameters;
+import com.mssngvwls.service.controller.model.GuessPhraseParameters;
 import com.mssngvwls.service.game.GameService;
-import com.mssngvwls.service.game.GameFactory;
 
 @RestController
 @RequestMapping("/game")
 public class GameController {
 
-    private final GameFactory gameFactory;
+    private final GameService gameService;
 
-    public GameController(final GameFactory gameFactory) {
-        this.gameFactory = gameFactory;
+    public GameController(final GameService gameService) {
+        this.gameService = gameService;
     }
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ResponseBody
     public Game startGame(@RequestBody final GameStartParameters parameters) {
-        final GameService game = gameFactory.createGame();
-        return game.startGame(parameters.getNumberOfCategories(), parameters.getNumberOfPhrasesPerCategory());
+        return gameService.startGame(parameters.getNumberOfCategories(), parameters.getNumberOfPhrasesPerCategory());
     }
 
     @RequestMapping(value = "/guess", method = RequestMethod.POST)
     @ResponseBody
-    public Game guess() {
-        return null;
+    public Game guess(@RequestBody final GuessPhraseParameters parameters) {
+        return gameService.guessPhrase(parameters.getGameId(), parameters.getGuess());
     }
 }

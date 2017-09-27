@@ -1,4 +1,4 @@
-package com.mssngvwls.model;
+package com.mssngvwls.service.controller.model;
 
 public class GameStartParameters {
 
