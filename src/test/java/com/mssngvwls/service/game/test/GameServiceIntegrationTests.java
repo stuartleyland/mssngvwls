@@ -44,7 +44,7 @@ public class GameServiceIntegrationTests {
     }
 
     @Test
-    public void can_make_a_guess() {
+    public void game_is_updated_with_next_phrase_after_guessing() {
         final Category footballTeams = new CategoryBuilder()
                 .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
                 .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME)
