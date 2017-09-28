@@ -1,5 +1,13 @@
 package com.mssngvwls.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mssngvwls.model.Category;
+import com.mssngvwls.model.builder.CategoryBuilder;
+import com.mssngvwls.service.repository.CategoryRepository;
+
+@Service
 public class TestUtils {
 
     public static final String FOOTBALL_TEAMS_CATEGORY_NAME = "Football Teams";
@@ -21,4 +29,15 @@ public class TestUtils {
     public static final String EUROPEAN_LANGUAGES_2 = "German";
     public static final String EUROPEAN_LANGUAGES_3 = "Spanish";
     public static final String EUROPEAN_LANGUAGES_4 = "Italian";
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    public void createCategoryWithPhrases(final String categoryName, final String... phrases) {
+        final Category footballTeams = new CategoryBuilder()
+                .withCategoryName(categoryName)
+                .withPhrases(phrases)
+                .build();
+        categoryRepository.save(footballTeams);
+    }
 }

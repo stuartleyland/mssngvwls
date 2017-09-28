@@ -15,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mssngvwls.model.Category;
 import com.mssngvwls.model.Game;
-import com.mssngvwls.model.builder.CategoryBuilder;
 import com.mssngvwls.service.game.GameService;
-import com.mssngvwls.service.repository.CategoryRepository;
+import com.mssngvwls.util.TestUtils;
 import com.mssngvwls.util.assertion.GamePhraseAssert;
 
 @RunWith(SpringRunner.class)
@@ -33,15 +31,11 @@ public class GameServiceIntegrationTests {
     private GameService gameService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private TestUtils testUtils;
 
     @Test
     public void new_game_is_started() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrase(FOOTBALL_TEAM_1_NAME)
-                .build();
-        categoryRepository.save(footballTeams);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game game = gameService.startGame(1, 1);
 
@@ -53,22 +47,17 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void game_is_updated_with_next_phrase_after_guessing() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME)
-                .build();
-        categoryRepository.save(footballTeams);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME);
 
         final Game game = gameService.startGame(1, 2);
 
         final Game gameAfterGuess = gameService.guessPhrase(game.getId(), FOOTBALL_TEAM_1_NAME);
-        assertThat(gameAfterGuess.getPreviousGuessCorrect().get()).isTrue();
-        assertThat(gameAfterGuess.getCurrentPhrase().get().getFullPhrase()).isEqualTo(FOOTBALL_TEAM_2_NAME);
+        assertThat(gameAfterGuess.getCurrentPhrase().isPresent()).isTrue();
     }
 
     @Test
     public void score_is_initialised_to_zero() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game gameState = gameService.startGame(1, 1);
 
@@ -77,7 +66,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void current_category_is_initialised_on_game_start() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game gameState = gameService.startGame(1, 1);
 
@@ -87,7 +76,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void current_phrase_is_initialised_on_game_start() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game gameState = gameService.startGame(1, 1);
 
@@ -98,7 +87,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void previous_guess_correct_is_not_set_on_game_start() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game gameState = gameService.startGame(1, 1);
 
@@ -107,7 +96,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void game_is_not_over_if_game_is_started_with_a_phrase() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Game gameState = gameService.startGame(1, 1);
 
@@ -123,7 +112,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void score_decreases_if_guess_is_incorrect() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         final Long id = gameAtStart.getId();
@@ -133,7 +122,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void previous_guess_correct_is_false_if_guess_is_incorrect() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         final Long id = gameAtStart.getId();
@@ -144,7 +133,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void previous_guess_correct_is_true_if_guess_is_correct() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         final Long id = gameAtStart.getId();
@@ -155,7 +144,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void score_increases_if_guess_is_correct() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         final Long id = gameAtStart.getId();
@@ -165,7 +154,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void game_is_over_after_guessing_one_and_only_phrase() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         final Long id = gameAtStart.getId();
@@ -175,7 +164,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void phrase_is_removed_after_it_has_been_selected() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         GamePhraseAssert.assertThat(gameAtStart.getPhrases()).doesNotHavePhrase(FOOTBALL_TEAM_1_NAME);
@@ -183,8 +172,8 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void next_phrase_is_selected_after_guessing_phrase() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
-        createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
         final Game gameAtStart = gameService.startGame(2, 1);
 
         final Long id = gameAtStart.getId();
@@ -196,7 +185,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void current_phrase_is_empty_if_game_is_over() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         assertThat(gameAtStart.getCurrentPhrase().isPresent()).isTrue();
@@ -208,7 +197,7 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void current_category_is_empty_if_game_is_over() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
         final Game gameAtStart = gameService.startGame(1, 1);
 
         assertThat(gameAtStart.getCurrentCategory().isPresent()).isTrue();
@@ -220,8 +209,8 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void score_is_2_if_two_guesses_are_correct() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
-        createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
         final Game gameAtStart = gameService.startGame(2, 1);
 
         final Long id = gameAtStart.getId();
@@ -232,21 +221,13 @@ public class GameServiceIntegrationTests {
 
     @Test
     public void score_is_0_if_one_guess_is_correct_and_one_is_incorrect() {
-        createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
-        createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
         final Game gameAtStart = gameService.startGame(2, 1);
 
         final Long id = gameAtStart.getId();
         gameService.guessPhrase(id, FOOTBALL_TEAM_1_NAME);
         final Game gameStateAfterSecondGuess = gameService.guessPhrase(id, "incorrect guess");
         assertThat(gameStateAfterSecondGuess.getScore()).isEqualTo(0);
-    }
-
-    private void createCategoryWithPhrases(final String categoryName, final String... phrases) {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(categoryName)
-                .withPhrases(phrases)
-                .build();
-        categoryRepository.save(footballTeams);
     }
 }

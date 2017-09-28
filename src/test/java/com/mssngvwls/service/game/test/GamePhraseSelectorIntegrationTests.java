@@ -17,54 +17,39 @@ import static com.mssngvwls.util.TestUtils.GOODBYES_CATEGORY_NAME;
 import static com.mssngvwls.util.TestUtils.GREETINGS_CATEGORY_NAME;
 import static com.mssngvwls.util.TestUtils.GREETING_1;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
 import java.util.Queue;
 
-import org.junit.Before;
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mssngvwls.model.Category;
 import com.mssngvwls.model.GamePhrase;
-import com.mssngvwls.model.builder.CategoryBuilder;
 import com.mssngvwls.model.builder.GamePhraseBuilder;
 import com.mssngvwls.service.game.GamePhraseSelector;
-import com.mssngvwls.service.game.PhraseFormatter;
-import com.mssngvwls.service.repository.CategoryRepository;
 import com.mssngvwls.util.GamePhraseQueueBuilder;
+import com.mssngvwls.util.TestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GamePhraseSelectorTests {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Transactional
+public class GamePhraseSelectorIntegrationTests {
 
     private static final String PHRASE_WITHOUT_VOWELS = "mssngvwls";
 
-    @Mock
-    private CategoryRepository categoryRepository;
-
-    @Mock
-    private PhraseFormatter phraseFormatter;
-
-    @InjectMocks
+    @Autowired
     private GamePhraseSelector phraseSelector;
 
-    @Before
-    public void setup() {
-        when(phraseFormatter.format(anyString())).thenReturn(PHRASE_WITHOUT_VOWELS);
-    }
+    @Autowired
+    private TestUtils testUtils;
 
     @Test
     public void game_phrases_are_generated_if_categories_and_phrases_meet_game_criteria() {
-        final Category category = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrase(FOOTBALL_TEAM_1_NAME)
-                .build();
-        when(categoryRepository.findAll()).thenReturn(Arrays.asList(category));
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME);
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(1, 1);
         assertThat(gamePhrases).containsExactly(new GamePhraseBuilder()
@@ -76,18 +61,8 @@ public class GamePhraseSelectorTests {
 
     @Test
     public void category_is_excluded_if_there_are_not_enough_phrases() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrase(FOOTBALL_TEAM_1_NAME)
-                .withPhrase(FOOTBALL_TEAM_2_NAME)
-                .build();
-
-        final Category greetings = new CategoryBuilder()
-                .withCategoryName(GREETINGS_CATEGORY_NAME)
-                .withPhrase(GREETING_1)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings));
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -100,15 +75,8 @@ public class GamePhraseSelectorTests {
 
     @Test
     public void no_categories_are_returned_if_there_are_not_enough_phrases() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .build();
-
-        final Category greetings = new CategoryBuilder()
-                .withCategoryName(GREETINGS_CATEGORY_NAME)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings));
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, new String[] {});
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, new String[] {});
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -118,27 +86,11 @@ public class GamePhraseSelectorTests {
 
     @Test
     public void first_matching_categories_are_used() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME)
-                .build();
-
-        final Category greetings = new CategoryBuilder()
-                .withCategoryName(GREETINGS_CATEGORY_NAME)
-                .withPhrase(GREETING_1)
-                .build();
-
-        final Category goodbyes = new CategoryBuilder()
-                .withCategoryName(GOODBYES_CATEGORY_NAME)
-                .withPhrases(GOODBYES_1, GOODBYES_2, GOODBYES_3)
-                .build();
-
-        final Category europeanLanguages = new CategoryBuilder()
-                .withCategoryName(EUROPEAN_LANGUAGES_CATEGORY_NAME)
-                .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings, goodbyes, europeanLanguages));
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
+        testUtils.createCategoryWithPhrases(GOODBYES_CATEGORY_NAME, GOODBYES_1, GOODBYES_2, GOODBYES_3);
+        testUtils.createCategoryWithPhrases(EUROPEAN_LANGUAGES_CATEGORY_NAME, EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3,
+                EUROPEAN_LANGUAGES_4);
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 2);
 
@@ -153,22 +105,11 @@ public class GamePhraseSelectorTests {
 
     @Test
     public void correct_number_of_phrases_for_matching_categories_are_returned() {
-        final Category footballTeams = new CategoryBuilder()
-                .withCategoryName(FOOTBALL_TEAMS_CATEGORY_NAME)
-                .withPhrases(FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME, FOOTBALL_TEAM_3_NAME, FOOTBALL_TEAM_4_NAME)
-                .build();
-
-        final Category greetings = new CategoryBuilder()
-                .withCategoryName(GREETINGS_CATEGORY_NAME)
-                .withPhrase(GREETING_1)
-                .build();
-
-        final Category europeanLanguages = new CategoryBuilder()
-                .withCategoryName(EUROPEAN_LANGUAGES_CATEGORY_NAME)
-                .withPhrases(EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3, EUROPEAN_LANGUAGES_4)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Arrays.asList(footballTeams, greetings, europeanLanguages));
+        testUtils.createCategoryWithPhrases(FOOTBALL_TEAMS_CATEGORY_NAME, FOOTBALL_TEAM_1_NAME, FOOTBALL_TEAM_2_NAME, FOOTBALL_TEAM_3_NAME,
+                FOOTBALL_TEAM_4_NAME);
+        testUtils.createCategoryWithPhrases(GREETINGS_CATEGORY_NAME, GREETING_1);
+        testUtils.createCategoryWithPhrases(EUROPEAN_LANGUAGES_CATEGORY_NAME, EUROPEAN_LANGUAGES_1, EUROPEAN_LANGUAGES_2, EUROPEAN_LANGUAGES_3,
+                EUROPEAN_LANGUAGES_4);
 
         final Queue<GamePhrase> gamePhrases = phraseSelector.generateCategories(2, 3);
 
