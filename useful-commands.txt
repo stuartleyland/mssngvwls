@@ -1,0 +1,10 @@
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{ "numberOfCategories" : 2, "numberOfPhrasesPerCategory" : 2 }' \
+  http://localhost:8080/game/start
+
+
+http POST http://localhost:8080/game/start numberOfCategories=2 numberOfPhrasesPerCategory=2
+
+
+http POST http://localhost:8080/game/guess gameId=1 guess=Arsenal
